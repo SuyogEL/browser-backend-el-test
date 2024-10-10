@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Docker Build and Push Workflow
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the repository
+      - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Log in to Docker Hub
@@ -19,10 +19,22 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build the Docker image
+      - name: Build Docker Image
+        id: build
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest .
 
-      - name: Push the Docker image
+  push:
+    runs-on: ubuntu-latest
+    needs: build # Ensure that the build job completes before this job starts
+
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest
