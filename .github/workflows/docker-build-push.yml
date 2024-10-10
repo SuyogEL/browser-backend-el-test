@@ -18,7 +18,7 @@ jobs:
       - name: Build Docker Image
         id: build
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest .
+          docker build -t suyogborael796/browser-elaunch:latest .
 
       - name: List Docker Images
         run: |
@@ -37,4 +37,4 @@ jobs:
 
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest
+          docker push suyogborael796/browser-elaunch:latest
