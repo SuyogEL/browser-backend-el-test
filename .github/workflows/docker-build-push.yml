@@ -1,0 +1,28 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build the Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest .
+
+      - name: Push the Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest
