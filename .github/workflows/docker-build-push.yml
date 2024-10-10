@@ -5,7 +5,7 @@ on:
     branches:
       - production
     paths-ignore:
-      - .github/workflows/docker-build-push.yml # Ignore changes to this specific YAML file
+      - .github/workflows/docker-build-push.yml
 
 jobs:
   build:
@@ -20,9 +20,13 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/browser-elaunch:latest .
 
+      - name: List Docker Images
+        run: |
+          docker images  # This will display all local Docker images for debugging
+
   push:
     runs-on: ubuntu-latest
-    needs: build # Ensure that the build job completes before this job starts
+    needs: build
 
     steps:
       - name: Log in to Docker Hub
