@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - production
+    paths-ignore:
+      - .github/workflows/docker-build-push.yml # Ignore changes to this specific YAML file
 
 jobs:
   build:
