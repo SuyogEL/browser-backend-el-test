@@ -29,6 +29,6 @@ socketService.initListeners();
 const PORT = process.env.PORT ? process.env.PORT : 8000;
 
 httpServer.listen(PORT, () => {
-  console.log(`Nodejs Server running on  ${PORT}`);
+  console.log(`Nodejs Server running on port ${PORT} testing github action`);
 });
 export { socketService }
